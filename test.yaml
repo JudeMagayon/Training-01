@@ -1,0 +1,37 @@
+# This is an exported workflow. Editing this file is not recommended.
+
+name: Jira ticket creation on Recon notification analyst assignment
+description: Creates Jira ticket with specified fields when the assigned analyst for a notification is updated.
+trigger:
+    next:
+        - created_by_is_equal_to_
+    event: Case/StatusChanged
+    name: Case > Case Status Changed > Case New
+    type: Signal
+    version_constraint: ~1
+actions:
+    CreateJiraIssue:
+        id: e3f7284ccfbd8a28f445924acc4ee994
+        name: Create Jira issue
+        properties:
+            _fields:
+                - ${Trigger.Case.Assigned}
+                - ${Trigger.Case.CreatedTime}
+                - ${Trigger.Case.Comments}
+                - ${Trigger.Case.CustomFields}
+                - ${Trigger.Case.CreatorUUID}
+            config_id:
+            description: ${data['Trigger.Case.Description']}
+            issue_type:
+                - Submit a request or incident
+                - Email request
+                - Ask a question
+            project: "10037"
+            summary: ${data['Trigger.Case.StatusChanged']}
+conditions:
+    created_by_is_equal_to_svc_verify8aravest_com:
+        next:
+            - CreateJiraIssue
+        expression: Trigger.Case.CreatorUUID:''
+        display:
+            - Created By is equal to 
