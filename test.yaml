@@ -1,4 +1,4 @@
-# This is an exported workflow. Editing this file is not recommended.
+
 
 name: Jira ticket creation on Recon notification analyst assignment
 description: Creates Jira ticket with specified fields when the assigned analyst for a notification is updated.
